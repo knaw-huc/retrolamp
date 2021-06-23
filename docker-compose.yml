@@ -1,0 +1,24 @@
+version: '2'
+services: 
+  php-apache:
+    build:
+      context: .
+    ports:
+      - 8089:80
+    volumes: 
+      - ./www:/var/www/html
+    environment:
+      TITLE: "OLD LAMPIE"
+      TZ: "Europe/Amsterdam"
+
+  mariadb:
+    image: mariadb:5.5
+    volumes: 
+       - mariavol:/var/lib/mysql
+    environment:
+      TZ: "Europe/Amsterdam"
+      MYSQL_ROOT_PASSWORD: "rood"
+      MYSQL_DATABASE: "opvang"
+      
+volumes:
+  mariavol:
