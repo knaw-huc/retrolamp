@@ -17,3 +17,5 @@ Go to:
    
     (mariadb, root,rood)
 
+
+Add your php-code to `retrolamp/www/webroot/`
