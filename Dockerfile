@@ -29,9 +29,10 @@ RUN   pear install PEAR \
 
 
 COPY config/php.ini  /usr/local/etc/php/php.ini
+COPY config/remoteip.conf /etc/apache2/mods-available/remoteip.conf
 COPY font/luxisb.ttf  /usr/X11/lib/X11/fonts/TTF/luxisb.ttf
 COPY font/luxisr.ttf  /usr/X11/lib/X11/fonts/TTF/luxisr.ttf
 
 
-RUN a2enmod rewrite
+RUN a2enmod rewrite && a2enmod remoteip
 RUN apachectl graceful
