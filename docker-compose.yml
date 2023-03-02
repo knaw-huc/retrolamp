@@ -6,19 +6,20 @@ services:
     ports:
       - 8089:80
     volumes: 
-      - ./www:/var/www/html
+      - $LOCAL_WEBROOT:/var/www/html
     environment:
       TITLE: "OLD LAMPIE"
       TZ: "Europe/Amsterdam"
+      ADMINER_DEFAULT_SERVER: host.docker.internal
 
-  mariadb:
-    image: mariadb:5.5
-    volumes: 
-       - mariavol:/var/lib/mysql
-    environment:
-      TZ: "Europe/Amsterdam"
-      MYSQL_ROOT_PASSWORD: "rood"
-      MYSQL_DATABASE: "opvang"
-      
-volumes:
-  mariavol:
+#  mariadb:
+#    image: mariadb:5.5
+#    volumes:
+#       - mariavol:/var/lib/mysql
+#    environment:
+#      TZ: "Europe/Amsterdam"
+#      MYSQL_ROOT_PASSWORD: "rood"
+#      MYSQL_DATABASE: "opvang"
+#
+#volumes:
+#  mariavol:
