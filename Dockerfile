@@ -29,6 +29,8 @@ RUN   pear install PEAR \
     && pear install Auth_HTTP
 
 COPY config/php.ini  /usr/local/etc/php/php.ini
+# when this image will be used behind an external proxy, add the proxy IP to remoteip.conf
+# otherwise the IP's of end users won't show up in the container logs
 COPY config/remoteip.conf /etc/apache2/mods-available/remoteip.conf
 COPY font/luxisb.ttf  /usr/X11/lib/X11/fonts/TTF/luxisb.ttf
 COPY font/luxisr.ttf  /usr/X11/lib/X11/fonts/TTF/luxisr.ttf
