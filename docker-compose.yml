@@ -3,6 +3,7 @@ services:
   php-apache:
     build:
       context: .
+    image: registry.diginfra.net/retrolamp-php-apache
     ports:
       - 8089:80
     volumes: 
