@@ -1,6 +1,6 @@
 FROM php:5.6-apache
 LABEL authors="Maarten van der Peet"
-RUN apt-get update && apt-get install -y libmagickwand-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y libmagickwand-dev --no-install-recommends && rm -rf /var/lib/apt/lists/* && mkdir /folia
 RUN pecl install imagick && docker-php-ext-enable imagick
 # RUN apt-get install -y libmcrypt-dev
 
@@ -18,20 +18,26 @@ RUN docker-php-ext-install xsl mbstring xmlrpc  wddx dom zip && \
 
 RUN   pear install PEAR \
     && pear install DB \
-
+    && pear install DB_DataObject \
     && pear install MDB2 \
     && pear install pear/MDB2#mysqli \
     && pear install pear/MDB2#mysql \
-
     && pear install DB_Pager \
     && pear install XML_SVG \
-    && pear install Image_Color 
-
+    && pear install Image_Color \
+    && pear install HTML_QuickForm \
+    && pear install Auth_HTTP
 
 COPY config/php.ini  /usr/local/etc/php/php.ini
+# when this image will be used behind an external proxy, add the proxy IP to remoteip.conf
+# otherwise the IP's of end users won't show up in the container logs
+COPY config/remoteip.conf /etc/apache2/mods-available/remoteip.conf
 COPY font/luxisb.ttf  /usr/X11/lib/X11/fonts/TTF/luxisb.ttf
 COPY font/luxisr.ttf  /usr/X11/lib/X11/fonts/TTF/luxisr.ttf
+COPY Smarty /usr/local/lib/php/Smarty
+COPY Smarty3 /usr/local/lib/php/Smarty3
 
 
-RUN a2enmod rewrite
+
+RUN a2enmod rewrite && a2enmod remoteip
 RUN apachectl graceful
